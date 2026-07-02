@@ -1,0 +1,29 @@
+{
+    "name": "zerp/landing-page",
+    "description": "Description for landing-page package",
+    "type": "library",
+    "license": "MIT",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Zerp\\LandingPage\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ZAWAT OFFICIALS PVT LTD",
+            "email": "zawatofficials@gmail.com"
+        },
+        {
+            "name": "HafizMMoaz",
+            "email": "hafizmoazkhalid@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Zerp\\LandingPage\\Providers\\LandingPageServiceProvider"
+            ]
+        }
+    }
+}
