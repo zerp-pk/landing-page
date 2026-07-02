@@ -74,9 +74,9 @@ export default function Footer({ settings }: FooterProps) {
     const variant = sectionData.variant || 'footer1';
     const config = FOOTER_VARIANTS[variant as keyof typeof FOOTER_VARIANTS] || FOOTER_VARIANTS.footer1;
     
-    const companyName = settings?.company_name || 'ERPGo SaaS';
+    const companyName = settings?.company_name || 'Zerp';
     const description = sectionData.description || 'The complete business management solution for modern enterprises.';
-    const contactEmail = settings?.contact_email || 'support@erpgosaas.com';
+    const contactEmail = settings?.contact_email || 'support@zerp.pk';
     const phone = settings?.contact_phone || '+1 (555) 123-4567';
     const newsletterTitle = sectionData.newsletter_title || 'Join Our Community';
     const newsletterDescription = sectionData.newsletter_description || 'We build modern web tools to help you jump-start your daily business work.';

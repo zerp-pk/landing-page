@@ -25,8 +25,8 @@ class LandingPageSettingSeeder extends Seeder
     private function getDefaultSettings(): array
     {
         return [
-            'company_name' => 'ERPGo SaaS',
-            'contact_email' => 'support@erpgosaas.com',
+            'company_name' => 'Zerp',
+            'contact_email' => 'support@zerp.pk',
             'contact_phone' => '+1 (555) 123-4567',
             'contact_address' => '123 Business Ave, City, State 12345',
             'config_sections' => $this->getDefaultConfigSections()
@@ -49,17 +49,17 @@ class LandingPageSettingSeeder extends Seeder
             'hero' => [
                 'variant' => 'hero1',
                 'title' => 'The Complete Cloud ERP Platform for Modern Enterprises',
-                'subtitle' => 'Streamline your entire business lifecycle, from finance to operations, with ERPGo SaaS. One platform, infinite possibilities.',
+                'subtitle' => 'Streamline your entire business lifecycle, from finance to operations, with Zerp. One platform, infinite possibilities.',
                 'primary_button_text' => 'Start Free Trial',
                 'primary_button_link' => route('register'),
                 'secondary_button_text' => 'Login',
                 'secondary_button_link' => route('login'),
-                'highlight_text' => 'ERPGo SaaS',
+                'highlight_text' => 'Zerp',
                 'image' => 'packages/workdo/LandingPage/src/Resources/assets/img/hero.png'
             ],
             'header' => [
                 'variant' => 'header1',
-                'company_name' => 'ERPGo SaaS',
+                'company_name' => 'Zerp',
                 'cta_text' => 'Get Started',
                 'enable_pricing_link' => true,
                 'navigation_items' => [
@@ -125,7 +125,7 @@ class LandingPageSettingSeeder extends Seeder
             ],
             'benefits' => [
                 'variant' => 'benefits1',
-                'title' => 'Why Choose ERPGo SaaS?',
+                'title' => 'Why Choose Zerp?',
                 'benefits' => [
                     ['title' => 'Unified Business Ecosystem', 'description' => 'Breakdown silos between your business functions. Our integrated modules for HRM, Accounting, CRM, Projects, and POS work in perfect harmony to provide a unified data source for your entire enterprise.'],
                     ['title' => 'Strategic Human Resource Management', 'description' => 'Transform your workforce management. Efficiently handle recruitment, onboarding, and attendance while ensuring compliant payroll processing. Empower your team with self-service portals and performance tracking.'],
@@ -152,7 +152,7 @@ class LandingPageSettingSeeder extends Seeder
             'cta' => [
                 'variant' => 'cta1',
                 'title' => 'Ready to Transform Your Business?',
-                'subtitle' => 'Join thousands of businesses already using ERPGo SaaS to streamline their operations.',
+                'subtitle' => 'Join thousands of businesses already using Zerp to streamline their operations.',
                 'primary_button' => 'Start Free Trial',
                 'secondary_button' => 'Contact Sales'
             ],
@@ -168,7 +168,7 @@ class LandingPageSettingSeeder extends Seeder
             'footer' => [
                 'variant' => 'footer1',
                 'description' => 'The complete business management solution for modern enterprises.',
-                'email' => 'support@erpgosaas.com',
+                'email' => 'support@zerp.pk',
                 'phone' => '+1 (555) 123-4567',
                 'newsletter_title' => 'Join Our Community',
                 'newsletter_description' => 'Subscribe to our newsletter for the latest business insights and updates.',
