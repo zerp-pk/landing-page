@@ -96,13 +96,13 @@ export default function AddonCard({ addon, colors, priceType = 'monthly', varian
 
     const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
         const target = e.currentTarget;
-        target.src = getImagePath(`/packages/workdo/${addon.module}/favicon.png`);
+        target.src = getImagePath(`/packages/local/${addon.module}/favicon.png`);
         target.className = config.fallbackClass;
     };
 
     const renderImage = () => (
         <img
-            src={getImagePath(addon.image ?? `/packages/workdo/${addon.module}/favicon.png`)}
+            src={getImagePath(addon.image ?? `/packages/local/${addon.module}/favicon.png`)}
             alt={addon.name}
             className="w-full h-full object-cover"
             onError={handleImageError}

@@ -18,7 +18,7 @@ class MarketplaceSettingSeeder extends Seeder
             $files = File::files($marketplaceDir);
             foreach ($files as $file) {
                 if (in_array($file->getExtension(), ['png', 'jpg', 'jpeg', 'gif', 'webp'])) {
-                    $screenshots[] = '/packages/workdo/LandingPage/src/marketplace/' . $file->getFilename();
+                    $screenshots[] = '/packages/local/LandingPage/src/marketplace/' . $file->getFilename();
                 }
             }
         }
@@ -57,19 +57,19 @@ class MarketplaceSettingSeeder extends Seeder
                                 'title' => 'Drag & Drop Builder',
                                 'description' => 'Create pages visually with our intuitive drag-and-drop interface.',
                                 'keyPoints' => ['Visual Editor', 'Pre-built Blocks', 'Real-time Preview', 'Mobile Responsive'],
-                                'screenshot' => '/packages/workdo/LandingPage/src/marketplace/image1.png'
+                                'screenshot' => '/packages/local/LandingPage/src/marketplace/image1.png'
                             ],
                             [
                                 'title' => 'Professional Templates',
                                 'description' => 'Choose from dozens of professionally designed templates for any industry.',
                                 'keyPoints' => ['Industry Templates', 'Customizable Designs', 'Modern Layouts', 'SEO Optimized'],
-                                'screenshot' => '/packages/workdo/LandingPage/src/marketplace/image2.png'
+                                'screenshot' => '/packages/local/LandingPage/src/marketplace/image2.png'
                             ],
                             [
                                 'title' => 'Advanced Analytics',
                                 'description' => 'Track visitor behavior and conversion rates with built-in analytics.',
                                 'keyPoints' => ['Conversion Tracking', 'Visitor Analytics', 'A/B Testing', 'Performance Reports'],
-                                'screenshot' => '/packages/workdo/LandingPage/src/marketplace/image3.png'
+                                'screenshot' => '/packages/local/LandingPage/src/marketplace/image3.png'
                             ]
                         ]
                     ],

@@ -65,13 +65,13 @@ export default function Screenshots({ settings, title: propTitle, subtitle: prop
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
     
     const defaultImages = [
-        'packages/workdo/LandingPage/src/Resources/assets/img/gallery1.jpeg',
-        'packages/workdo/LandingPage/src/Resources/assets/img/gallery2.jpeg',
-        'packages/workdo/LandingPage/src/Resources/assets/img/gallery3.jpeg',
-        'packages/workdo/LandingPage/src/Resources/assets/img/gallery4.jpeg',
-        'packages/workdo/LandingPage/src/Resources/assets/img/gallery5.jpeg',
-        'packages/workdo/LandingPage/src/Resources/assets/img/gallery6.jpeg',
-        'packages/workdo/LandingPage/src/Resources/assets/img/gallery7.jpeg',
+        'packages/local/LandingPage/src/Resources/assets/img/gallery1.jpeg',
+        'packages/local/LandingPage/src/Resources/assets/img/gallery2.jpeg',
+        'packages/local/LandingPage/src/Resources/assets/img/gallery3.jpeg',
+        'packages/local/LandingPage/src/Resources/assets/img/gallery4.jpeg',
+        'packages/local/LandingPage/src/Resources/assets/img/gallery5.jpeg',
+        'packages/local/LandingPage/src/Resources/assets/img/gallery6.jpeg',
+        'packages/local/LandingPage/src/Resources/assets/img/gallery7.jpeg',
     ];
     
     const images = propScreenshots?.filter((img: string) => img) || sectionData.images?.filter((img: string) => img) || defaultImages;

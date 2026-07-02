@@ -169,7 +169,7 @@ class LandingPageController extends Controller
 
     private function processImagePath($imagePath)
     {
-        if (strpos($imagePath, 'packages/workdo') !== false) {
+        if (strpos($imagePath, 'packages/local') !== false) {
             return $imagePath;
         }
         return basename($imagePath);

@@ -57,13 +57,13 @@ export default function Gallery({ settings }: GalleryProps) {
     const [lightboxOpen, setLightboxOpen] = useState(false);
     
     const defaultImages = [
-        'packages/workdo/LandingPage/src/Resources/assets/img/gallery1.jpeg',
-        'packages/workdo/LandingPage/src/Resources/assets/img/gallery2.jpeg',
-        'packages/workdo/LandingPage/src/Resources/assets/img/gallery3.jpeg',
-        'packages/workdo/LandingPage/src/Resources/assets/img/gallery4.jpeg',
-        'packages/workdo/LandingPage/src/Resources/assets/img/gallery5.jpeg',
-        'packages/workdo/LandingPage/src/Resources/assets/img/gallery6.jpeg',
-        'packages/workdo/LandingPage/src/Resources/assets/img/gallery7.jpeg'
+        'packages/local/LandingPage/src/Resources/assets/img/gallery1.jpeg',
+        'packages/local/LandingPage/src/Resources/assets/img/gallery2.jpeg',
+        'packages/local/LandingPage/src/Resources/assets/img/gallery3.jpeg',
+        'packages/local/LandingPage/src/Resources/assets/img/gallery4.jpeg',
+        'packages/local/LandingPage/src/Resources/assets/img/gallery5.jpeg',
+        'packages/local/LandingPage/src/Resources/assets/img/gallery6.jpeg',
+        'packages/local/LandingPage/src/Resources/assets/img/gallery7.jpeg'
     ];
     
     const galleryImages = (sectionData.images?.filter((img: string) => img) || []).length > 0 

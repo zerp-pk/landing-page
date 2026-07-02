@@ -1,6 +1,6 @@
 {
     "name": "zerp/landing-page",
-    "description": "Description for landing-page package",
+    "description": "Landing page, CMS, and marketplace module for the Zerp ERP platform",
     "type": "library",
     "license": "MIT",
     "require": {},
