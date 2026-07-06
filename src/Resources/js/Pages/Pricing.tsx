@@ -64,9 +64,6 @@ export default function Pricing(props: PricingProps) {
 
     // TODO: swap for https://docs.zerp.pk/developer/getting-started once that DNS is live.
     const docsGettingStartedUrl = 'https://zerp-pk.github.io/docs/developer/getting-started';
-    const contactEmail = settings?.contact_email || 'support@zerp.pk';
-    const mailto = (subject: string) => `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}`;
-
     const tiers = [
         {
             name: t('Open Source'),
@@ -87,14 +84,14 @@ export default function Pricing(props: PricingProps) {
             price: t('Contact us'),
             description: t('Need custom modules or workflow changes? Our team can tailor Zerp to your business.'),
             cta: t('Contact Us'),
-            onClick: () => { window.location.href = mailto('Customization inquiry'); },
+            onClick: () => { window.location.href = route('contact.page'); },
         },
         {
             name: t('Installation'),
             price: t('Contact us'),
             description: t("We'll set up and configure Zerp on your server for you, end to end."),
             cta: t('Contact Us'),
-            onClick: () => { window.location.href = mailto('Installation service inquiry'); },
+            onClick: () => { window.location.href = route('contact.page'); },
         },
     ];
 
