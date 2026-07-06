@@ -16,9 +16,9 @@ export default function Colors({ data, getSectionData, updateSectionData, update
     const { t } = useTranslation();
     
     const colors = data.config_sections?.colors || {
-        primary: '#10b77f',
-        secondary: '#059669', 
-        accent: '#065f46'
+        primary: '#DA8F29',
+        secondary: '#B8741F',
+        accent: '#7A4D14'
     };
 
     const updateColors = (colorKey: string, value: string) => {
@@ -30,7 +30,7 @@ export default function Colors({ data, getSectionData, updateSectionData, update
     };
 
     const presetColors = [
-        { name: 'Green', primary: '#10b77f', secondary: '#059669', accent: '#065f46' },
+        { name: 'Zawat', primary: '#DA8F29', secondary: '#B8741F', accent: '#7A4D14' },
         { name: 'Blue', primary: '#3b82f6', secondary: '#1d4ed8', accent: '#1e3a8a' },
         { name: 'Purple', primary: '#8b5cf6', secondary: '#7c3aed', accent: '#581c87' },
         { name: 'Orange', primary: '#f97316', secondary: '#ea580c', accent: '#9a3412' },
@@ -101,7 +101,7 @@ export default function Colors({ data, getSectionData, updateSectionData, update
                                 value={colors.accent}
                                 onChange={(e) => updateColors('accent', e.target.value)}
                                 className="flex-1"
-                                placeholder="#10b77f"
+                                placeholder="#DA8F29"
                             />
                         </div>
                     </div>

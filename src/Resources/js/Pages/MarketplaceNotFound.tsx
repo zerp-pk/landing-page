@@ -28,9 +28,9 @@ export default function MarketplaceNotFound({ landingPageSettings }: Marketplace
     const { t } = useTranslation();
     // Apply color settings from landing page
     const colorScheme = landingPageSettings?.config_sections?.colors || {
-        primary: '#10b77f',
-        secondary: '#059669',
-        accent: '#065f46'
+        primary: '#DA8F29',
+        secondary: '#B8741F',
+        accent: '#7A4D14'
     };
     const { adminAllSetting, auth } = usePage().props as any;
     const updatedLandingPageSettings = { ...landingPageSettings, is_authenticated: (auth?.user?.id !== undefined && auth?.user?.id !== null) };

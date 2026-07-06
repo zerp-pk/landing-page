@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { ChevronDown, Monitor } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { getImagePath } from '@/utils/helpers';
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 
 interface ModulesProps {
     settings?: any;
@@ -9,38 +10,38 @@ interface ModulesProps {
 
 const MODULES_VARIANTS = {
     modules1: {
-        section: 'bg-white py-20',
+        section: 'bg-white py-24 md:py-32',
         container: 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8',
-        title: 'text-3xl md:text-4xl font-bold text-gray-900 mb-6 text-center',
-        subtitle: 'text-lg text-gray-600 mb-16 text-center max-w-3xl mx-auto',
+        title: 'text-3xl md:text-5xl font-semibold tracking-tight text-gray-900 mb-6 text-center',
+        subtitle: 'text-lg md:text-xl text-gray-500 mb-16 text-center max-w-3xl mx-auto font-normal',
         layout: 'tabs'
     },
     modules2: {
-        section: 'bg-gray-50 py-20',
+        section: 'bg-gray-50 py-24 md:py-32',
         container: 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8',
-        title: 'text-3xl md:text-4xl font-bold text-gray-900 mb-6 text-center',
-        subtitle: 'text-lg text-gray-600 mb-16 text-center',
+        title: 'text-3xl md:text-5xl font-semibold tracking-tight text-gray-900 mb-6 text-center',
+        subtitle: 'text-lg md:text-xl text-gray-500 mb-16 text-center font-normal',
         layout: 'cards'
     },
     modules3: {
-        section: 'bg-white py-20',
+        section: 'bg-white py-24 md:py-32',
         container: 'max-w-5xl mx-auto px-4 sm:px-6 lg:px-8',
-        title: 'text-3xl md:text-4xl font-bold text-gray-900 mb-6 text-center',
-        subtitle: 'text-lg text-gray-600 mb-16 text-center',
+        title: 'text-3xl md:text-5xl font-semibold tracking-tight text-gray-900 mb-6 text-center',
+        subtitle: 'text-lg md:text-xl text-gray-500 mb-16 text-center font-normal',
         layout: 'accordion'
     },
     modules4: {
-        section: 'bg-gray-900 py-20',
+        section: 'bg-neutral-950 py-24 md:py-32',
         container: 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8',
-        title: 'text-3xl md:text-4xl font-bold text-white mb-6 text-center',
-        subtitle: 'text-lg text-gray-300 mb-16 text-center',
+        title: 'text-3xl md:text-5xl font-semibold tracking-tight text-white mb-6 text-center',
+        subtitle: 'text-lg md:text-xl text-white/60 mb-16 text-center font-normal',
         layout: 'slider'
     },
     modules5: {
-        section: 'bg-white py-20',
+        section: 'bg-white py-24 md:py-32',
         container: 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8',
-        title: 'text-3xl md:text-4xl font-bold text-gray-900 mb-6 text-center',
-        subtitle: 'text-lg text-gray-600 mb-16 text-center',
+        title: 'text-3xl md:text-5xl font-semibold tracking-tight text-gray-900 mb-6 text-center',
+        subtitle: 'text-lg md:text-xl text-gray-500 mb-16 text-center font-normal',
         layout: 'grid'
     }
 };
@@ -53,7 +54,7 @@ export default function Modules({ settings }: ModulesProps) {
     
     const title = sectionData.title || 'Complete Business Solutions';
     const subtitle = sectionData.subtitle || 'Discover our comprehensive modules designed to streamline every aspect of your business operations';
-    const colors = settings?.config_sections?.colors || { primary: '#10b77f', secondary: '#059669', accent: '#f59e0b' };
+    const colors = settings?.config_sections?.colors || { primary: '#DA8F29', secondary: '#B8741F', accent: '#f59e0b' };
     const [activeTab, setActiveTab] = useState(0);
     const [openAccordion, setOpenAccordion] = useState(0);
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -65,6 +66,9 @@ export default function Modules({ settings }: ModulesProps) {
     ];
     
     const modules = sectionData.modules?.length > 0 ? sectionData.modules : defaultModules;
+
+    const sectionRef = useRef<HTMLElement>(null);
+    useScrollReveal(sectionRef);
 
     const renderTabs = () => (
         <div>
@@ -86,10 +90,10 @@ export default function Modules({ settings }: ModulesProps) {
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{modules[activeTab]?.title}</h3>
-                    <p className="text-gray-600 text-lg">{modules[activeTab]?.description}</p>
+                    <h3 className="text-2xl font-semibold tracking-tight text-gray-900 mb-4">{modules[activeTab]?.title}</h3>
+                    <p className="text-gray-500 text-lg">{modules[activeTab]?.description}</p>
                 </div>
-                <div className="bg-gray-100 rounded-lg h-80 flex items-center justify-center overflow-hidden shadow-[0px_2px_4px_0px_rgba(14,30,37,0.12),0px_2px_16px_0px_rgba(14,30,37,0.32)]">
+                <div className="bg-gray-100 rounded-2xl border border-gray-200 h-80 flex items-center justify-center overflow-hidden">
                     {modules[activeTab]?.image ? (
                         <img src={modules[activeTab].image.startsWith('http') ? modules[activeTab].image : getImagePath(modules[activeTab].image)} alt={modules[activeTab].title} className="w-full h-full object-cover" />
                     ) : (
@@ -103,7 +107,7 @@ export default function Modules({ settings }: ModulesProps) {
     const renderCards = () => (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {modules.map((module: any, index: number) => (
-                <div key={index} className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                <div key={index} className="reveal-item bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all">
                     <div className="h-48 bg-gray-100 rounded-lg mb-6 flex items-center justify-center overflow-hidden">
                         {module.image ? (
                             <img src={module.image.startsWith('http') ? module.image : getImagePath(module.image)} alt={module.title} className="w-full h-full object-cover" />
@@ -111,8 +115,8 @@ export default function Modules({ settings }: ModulesProps) {
                             <Monitor className="h-12 w-12 text-gray-400" />
                         )}
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">{module.title}</h3>
-                    <p className="text-gray-600">{module.description}</p>
+                    <h3 className="text-xl font-semibold tracking-tight text-gray-900 mb-3">{module.title}</h3>
+                    <p className="text-gray-500">{module.description}</p>
                 </div>
             ))}
         </div>
@@ -121,7 +125,7 @@ export default function Modules({ settings }: ModulesProps) {
     const renderAccordion = () => (
         <div className="space-y-6 max-w-4xl mx-auto">
             {modules.map((module: any, index: number) => (
-                <div key={index} className="bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+                <div key={index} className="reveal-item bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300 overflow-hidden">
                     <button
                         onClick={() => setOpenAccordion(openAccordion === index ? -1 : index)}
                         className="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
@@ -132,7 +136,7 @@ export default function Modules({ settings }: ModulesProps) {
                                 <Monitor className="h-6 w-6" style={{ color: colors.primary }} />
                             </div>
                             <div>
-                                <span className="font-bold text-gray-900 text-lg">{module.label}</span>
+                                <span className="font-semibold text-gray-900 text-lg">{module.label}</span>
                                 <p className="text-sm text-gray-500 mt-1">{module.description?.substring(0, 60)}...</p>
                             </div>
                         </div>
@@ -142,10 +146,10 @@ export default function Modules({ settings }: ModulesProps) {
                         <div className="px-8 pb-8 bg-gray-50">
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center pt-6">
                                 <div className="space-y-4">
-                                    <h3 className="text-2xl font-bold text-gray-900">{module.title}</h3>
-                                    <p className="text-gray-600 leading-relaxed">{module.description}</p>
+                                    <h3 className="text-2xl font-semibold tracking-tight text-gray-900">{module.title}</h3>
+                                    <p className="text-gray-500 leading-relaxed">{module.description}</p>
                                 </div>
-                                <div className="h-64 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden shadow-inner">
+                                <div className="h-64 bg-gray-100 rounded-xl border border-gray-200 flex items-center justify-center overflow-hidden">
                                     {module.image ? (
                                         <img src={module.image.startsWith('http') ? module.image : getImagePath(module.image)} alt={module.title} className="w-full h-full object-cover" />
                                     ) : (
@@ -165,24 +169,24 @@ export default function Modules({ settings }: ModulesProps) {
 
     const renderSlider = () => (
         <div className="relative">
-            <div className="overflow-hidden rounded-xl">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-gray-800 p-12 rounded-xl">
+            <div className="overflow-hidden rounded-2xl">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-white/5 border border-white/10 p-12 rounded-2xl">
                     <div>
-                        <h3 className="text-2xl font-bold text-white mb-4">{modules[currentSlide]?.title}</h3>
-                        <p className="text-gray-300 text-lg mb-6">{modules[currentSlide]?.description}</p>
+                        <h3 className="text-2xl font-semibold tracking-tight text-white mb-4">{modules[currentSlide]?.title}</h3>
+                        <p className="text-white/60 text-lg mb-6">{modules[currentSlide]?.description}</p>
                         <div className="flex space-x-2">
                             {modules.map((_: any, index: number) => (
                                 <button
                                     key={index}
                                     onClick={() => setCurrentSlide(index)}
                                     className={`w-3 h-3 rounded-full transition-colors ${
-                                        currentSlide === index ? 'bg-white' : 'bg-gray-600'
+                                        currentSlide === index ? 'bg-white' : 'bg-white/20'
                                     }`}
                                 />
                             ))}
                         </div>
                     </div>
-                    <div className="h-80 bg-gray-700 rounded-lg flex items-center justify-center overflow-hidden">
+                    <div className="h-80 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center overflow-hidden">
                         {modules[currentSlide]?.image ? (
                             <img src={modules[currentSlide].image.startsWith('http') ? modules[currentSlide].image : getImagePath(modules[currentSlide].image)} alt={modules[currentSlide].title} className="w-full h-full object-cover" />
                         ) : (
@@ -197,7 +201,7 @@ export default function Modules({ settings }: ModulesProps) {
     const renderGrid = () => (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {modules.map((module: any, index: number) => (
-                <div key={index} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-gray-200 group">
+                <div key={index} className="reveal-item bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-gray-200 hover:border-gray-300 group">
                     <div className="p-8">
                         <div className="flex items-start space-x-6">
                             <div className="flex-shrink-0 relative">
@@ -208,13 +212,13 @@ export default function Modules({ settings }: ModulesProps) {
                                         <Monitor className="h-10 w-10 text-gray-400" />
                                     )}
                                 </div>
-                                <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: colors.primary }}>
+                                <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-semibold" style={{ backgroundColor: colors.primary }}>
                                     {index + 1}
                                 </div>
                             </div>
                             <div className="flex-1">
-                                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-gray-700 transition-colors">{module.title}</h3>
-                                <p className="text-gray-600 leading-relaxed mb-4">{module.description}</p>
+                                <h3 className="text-xl font-semibold tracking-tight text-gray-900 mb-3 group-hover:text-gray-700 transition-colors">{module.title}</h3>
+                                <p className="text-gray-500 leading-relaxed mb-4">{module.description}</p>
                                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium" style={{ backgroundColor: `${colors.primary}15`, color: colors.primary }}>
                                     {module.label}
                                 </span>
@@ -243,10 +247,10 @@ export default function Modules({ settings }: ModulesProps) {
     };
 
     return (
-        <section className={config.section}>
+        <section ref={sectionRef} className={config.section}>
             <div className={config.container}>
-                <h2 className={config.title}>{title}</h2>
-                <p className={config.subtitle}>{subtitle}</p>
+                <h2 className={`${config.title} reveal-item`}>{title}</h2>
+                <p className={`${config.subtitle} reveal-item`}>{subtitle}</p>
                 {renderContent()}
             </div>
         </section>

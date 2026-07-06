@@ -16,8 +16,8 @@ export function LandingPreview({ settings }: LandingPreviewProps) {
   };
 
   const colors = settings?.config_sections?.colors || {
-    primary: '#10b77f',
-    secondary: '#059669',
+    primary: '#DA8F29',
+    secondary: '#B8741F',
     accent: '#f59e0b'
   };
 

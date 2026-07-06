@@ -92,9 +92,9 @@ export default function Marketplace({ packages = [], settings, landingPageSettin
 
     // Apply color settings from landing page
     const colorScheme = landingPageSettings?.config_sections?.colors || {
-        primary: '#10b77f',
-        secondary: '#059669',
-        accent: '#065f46'
+        primary: '#DA8F29',
+        secondary: '#B8741F',
+        accent: '#7A4D14'
     };
 
     return (

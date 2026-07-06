@@ -69,8 +69,8 @@ export default function Dedication({ settings, title: propTitle, description: pr
     const title = propTitle || sectionData.title || 'Dedicated to Excellence';
     const description = propDescription || sectionData.description || 'Our premium packages are crafted with attention to detail, ensuring seamless integration and powerful functionality for your business needs.';
     const colors = { 
-        primary: settings?.config_sections?.colors?.primary || 'var(--color-primary)' || '#10b77f', 
-        secondary: settings?.config_sections?.colors?.secondary || 'var(--color-secondary)' || '#059669', 
+        primary: settings?.config_sections?.colors?.primary || 'var(--color-primary)' || '#DA8F29', 
+        secondary: settings?.config_sections?.colors?.secondary || 'var(--color-secondary)' || '#B8741F', 
         accent: settings?.config_sections?.colors?.accent || 'var(--color-accent)' || '#f59e0b' 
     };
  

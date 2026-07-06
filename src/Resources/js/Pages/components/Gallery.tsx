@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getImagePath } from '@/utils/helpers';
 import { useTranslation } from 'react-i18next';
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 
 interface GalleryProps {
     settings?: any;
@@ -8,38 +9,38 @@ interface GalleryProps {
 
 const GALLERY_VARIANTS = {
     gallery1: {
-        section: 'bg-white py-20',
+        section: 'bg-white py-24 md:py-32',
         container: 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8',
-        title: 'text-3xl md:text-4xl font-bold text-gray-900 mb-6',
-        subtitle: 'text-lg text-gray-600',
+        title: 'text-3xl md:text-5xl font-semibold tracking-tight text-gray-900 mb-6',
+        subtitle: 'text-lg md:text-xl text-gray-500 font-normal',
         layout: 'slider'
     },
     gallery2: {
-        section: 'bg-gray-50 py-20',
+        section: 'bg-gray-50 py-24 md:py-32',
         container: 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8',
-        title: 'text-3xl md:text-4xl font-bold text-gray-900 mb-6',
-        subtitle: 'text-lg text-gray-600',
+        title: 'text-3xl md:text-5xl font-semibold tracking-tight text-gray-900 mb-6',
+        subtitle: 'text-lg md:text-xl text-gray-500 font-normal',
         layout: 'grid'
     },
     gallery3: {
-        section: 'bg-gradient-to-br from-gray-50 to-white py-20',
+        section: 'bg-white py-24 md:py-32',
         container: 'max-w-6xl mx-auto px-4 sm:px-6 lg:px-8',
-        title: 'text-3xl md:text-4xl font-bold text-gray-900 mb-6',
-        subtitle: 'text-lg text-gray-600',
+        title: 'text-3xl md:text-5xl font-semibold tracking-tight text-gray-900 mb-6',
+        subtitle: 'text-lg md:text-xl text-gray-500 font-normal',
         layout: 'stacked'
     },
     gallery4: {
-        section: 'bg-gray-900 py-20',
+        section: 'bg-neutral-950 py-24 md:py-32',
         container: 'max-w-full px-4 sm:px-6 lg:px-8',
-        title: 'text-3xl md:text-4xl font-bold text-white mb-6',
-        subtitle: 'text-lg text-gray-300',
+        title: 'text-3xl md:text-5xl font-semibold tracking-tight text-white mb-6',
+        subtitle: 'text-lg md:text-xl text-white/60 font-normal',
         layout: 'carousel'
     },
     gallery5: {
-        section: 'bg-white py-20',
+        section: 'bg-white py-24 md:py-32',
         container: 'max-w-5xl mx-auto px-4 sm:px-6 lg:px-8',
-        title: 'text-3xl md:text-4xl font-bold text-gray-900 mb-6',
-        subtitle: 'text-lg text-gray-600',
+        title: 'text-3xl md:text-5xl font-semibold tracking-tight text-gray-900 mb-6',
+        subtitle: 'text-lg md:text-xl text-gray-500 font-normal',
         layout: 'lightbox'
     }
 };
@@ -52,7 +53,7 @@ export default function Gallery({ settings }: GalleryProps) {
     
     const title = sectionData.title || 'Gallery';
     const subtitle = sectionData.subtitle || 'Explore our product in action';
-    const colors = settings?.config_sections?.colors || { primary: '#10b77f', secondary: '#059669', accent: '#f59e0b' };
+    const colors = settings?.config_sections?.colors || { primary: '#DA8F29', secondary: '#B8741F', accent: '#f59e0b' };
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [lightboxOpen, setLightboxOpen] = useState(false);
     
@@ -66,10 +67,13 @@ export default function Gallery({ settings }: GalleryProps) {
         'packages/local/LandingPage/src/Resources/assets/img/gallery7.jpeg'
     ];
     
-    const galleryImages = (sectionData.images?.filter((img: string) => img) || []).length > 0 
-        ? sectionData.images.filter((img: string) => img) 
+    const galleryImages = (sectionData.images?.filter((img: string) => img) || []).length > 0
+        ? sectionData.images.filter((img: string) => img)
         : defaultImages;
-    
+
+    const sectionRef = useRef<HTMLElement>(null);
+    useScrollReveal(sectionRef);
+
     const nextImage = () => {
         setCurrentImageIndex((prev) => (prev + 1) % galleryImages.length);
     };
@@ -126,7 +130,7 @@ export default function Gallery({ settings }: GalleryProps) {
     const renderGrid = () => (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {galleryImages.map((image, index) => (
-                <div key={index} className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+                <div key={index} className="reveal-item group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
                     <img
                         src={image?.startsWith('http') ? image : getImagePath(image || '')}
                         alt={`Gallery image ${index + 1}`}
@@ -142,7 +146,7 @@ export default function Gallery({ settings }: GalleryProps) {
         <div className="relative max-w-4xl mx-auto">
             <div className="space-y-8">
                 {galleryImages.map((image, index) => (
-                    <div key={index} className={`relative group ${
+                    <div key={index} className={`reveal-item relative group ${
                         index % 2 === 0 ? 'ml-0 mr-16' : 'ml-16 mr-0'
                     }`}>
                         <div className="relative overflow-hidden rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-2">
@@ -173,7 +177,7 @@ export default function Gallery({ settings }: GalleryProps) {
         <div className="relative">
             <div className="flex space-x-8 overflow-x-auto pb-8 px-4 scrollbar-hide snap-x snap-mandatory">
                 {galleryImages.map((image, index) => (
-                    <div key={index} className="flex-shrink-0 w-96 h-80 relative overflow-hidden rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 snap-center group">
+                    <div key={index} className="reveal-item flex-shrink-0 w-96 h-80 relative overflow-hidden rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 snap-center group">
                         <img
                             src={image?.startsWith('http') ? image : getImagePath(image || '')}
                             alt={`Gallery image ${index + 1}`}
@@ -216,9 +220,9 @@ export default function Gallery({ settings }: GalleryProps) {
             <>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {galleryImages.map((image, index) => (
-                        <div 
-                            key={index} 
-                            className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer bg-gradient-to-br from-gray-800 to-gray-900 transform hover:-translate-y-2"
+                        <div
+                            key={index}
+                            className="reveal-item group relative overflow-hidden rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer bg-neutral-900"
                             onClick={() => {
                                 setCurrentImageIndex(index);
                                 setLightboxOpen(true);
@@ -348,13 +352,13 @@ export default function Gallery({ settings }: GalleryProps) {
     };
 
     return (
-        <section className={config.section}>
+        <section ref={sectionRef} className={config.section}>
             <div className={config.container}>
-                <div className="text-center mb-16">
+                <div className="text-center mb-16 reveal-item">
                     <h2 className={config.title}>{title}</h2>
                     <p className={config.subtitle}>{subtitle}</p>
                 </div>
-                
+
                 {renderGalleryContent()}
             </div>
         </section>

@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Zerp\LandingPage\Models\CustomPage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use Zerp\LandingPage\Http\Requests\StoreContactMessageRequest;
+use Zerp\LandingPage\Mail\ContactMessageMail;
 
 class LandingPageController extends Controller
 {
@@ -87,6 +91,47 @@ class LandingPageController extends Controller
             'activeModules' => $activeModules,
             'settings' => $settingsData,
 
+        ]);
+    }
+
+    public function contact(Request $request)
+    {
+        $settings = LandingPageSetting::first();
+        $enableRegistration = admin_setting('enableRegistration');
+
+        $settingsData = $settings ? $settings->toArray() : [];
+        $settingsData['enable_registration'] = $enableRegistration === 'on';
+        $settingsData['is_authenticated'] = $request->user() !== null;
+
+        return Inertia::render('LandingPage/Contact', [
+            'settings' => $settingsData,
+        ]);
+    }
+
+    public function submitContact(StoreContactMessageRequest $request)
+    {
+        $validated = $request->validated();
+        $recipient = optional(LandingPageSetting::first())->contact_email ?: config('mail.from.address');
+
+        try {
+            Mail::to($recipient)->send(new ContactMessageMail(
+                $validated['name'],
+                $validated['email'],
+                $validated['subject'] ?? 'New contact form message',
+                $validated['message'],
+            ));
+        } catch (\Throwable $e) {
+            Log::error('Failed to send contact form email: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => __('Failed to send your message. Please try again later.'),
+            ], 500);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => __("Thanks for reaching out! We'll get back to you soon."),
         ]);
     }
 

@@ -41,6 +41,8 @@ Route::middleware(['web', 'auth'])->prefix('newsletter-subscribers')->name('news
 Route::middleware(['web'])->group(function () {
     Route::get('/', [LandingPageController::class, 'index'])->name('landing.page');
     Route::get('/pricing', [LandingPageController::class, 'pricing'])->name('pricing.page');
+    Route::get('/contact', [LandingPageController::class, 'contact'])->name('contact.page');
+    Route::post('/contact', [LandingPageController::class, 'submitContact'])->name('contact.submit');
     Route::get('/marketplace/{slug?}', [MarketplaceController::class, 'index'])->name('marketplace');
     Route::get('/page/{slug}', [CustomPageController::class, 'show'])->name('custom-page.show');
     Route::post('/newsletter/subscribe', [NewsletterSubscriberController::class, 'store'])->name('newsletter.subscribe');

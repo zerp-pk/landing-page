@@ -2,9 +2,10 @@ import { Head, router, usePage } from '@inertiajs/react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { getAdminSetting, getImagePath, formatAdminCurrency } from '@/utils/helpers';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import CookieConsent from "@/components/cookie-consent";
 import { useTranslation } from 'react-i18next';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 interface Plan {
     id: number;
@@ -51,10 +52,51 @@ export default function Pricing(props: PricingProps) {
     const activeModules = props.activeModules || [];
     const settings = { ...props.settings, is_authenticated: (auth?.user?.id !== undefined && auth?.user?.id !== null) };
     const filters = props.filters || {};
-    const colors = settings?.config_sections?.colors || { primary: '#10b77f', secondary: '#059669', accent: '#f59e0b' };
+    const colors = settings?.config_sections?.colors || { primary: '#DA8F29', secondary: '#B8741F', accent: '#f59e0b' };
     const pricingSettings = settings?.config_sections?.sections?.pricing || {};
     
     const [priceType, setPriceType] = useState(pricingSettings.default_price_type || 'monthly');
+
+    const tiersRef = useRef<HTMLElement>(null);
+    useScrollReveal(tiersRef);
+    const cloudPlansRef = useRef<HTMLDivElement>(null);
+    const scrollToCloudPlans = () => cloudPlansRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // TODO: swap for https://docs.zerp.pk/developer/getting-started once that DNS is live.
+    const docsGettingStartedUrl = 'https://zerp-pk.github.io/docs/developer/getting-started';
+    const contactEmail = settings?.contact_email || 'support@zerp.pk';
+    const mailto = (subject: string) => `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}`;
+
+    const tiers = [
+        {
+            name: t('Open Source'),
+            price: t('Free'),
+            description: t('Self-host Zerp on your own infrastructure. Full source, no license fees, community support.'),
+            cta: t('View Documentation'),
+            onClick: () => window.open(docsGettingStartedUrl, '_blank', 'noopener,noreferrer'),
+        },
+        {
+            name: t('Cloud'),
+            price: t('See plans below'),
+            description: t('We host and manage Zerp for you on our own servers. Pick a plan and get started in minutes.'),
+            cta: t('View Plans'),
+            onClick: scrollToCloudPlans,
+        },
+        {
+            name: t('Customize'),
+            price: t('Contact us'),
+            description: t('Need custom modules or workflow changes? Our team can tailor Zerp to your business.'),
+            cta: t('Contact Us'),
+            onClick: () => { window.location.href = mailto('Customization inquiry'); },
+        },
+        {
+            name: t('Installation'),
+            price: t('Contact us'),
+            description: t("We'll set up and configure Zerp on your server for you, end to end."),
+            cta: t('Contact Us'),
+            onClick: () => { window.location.href = mailto('Installation service inquiry'); },
+        },
+    ];
 
     // Find the plan with the highest order count for "Most Popular" badge
     const mostPopularPlanId = plans.length > 0 
@@ -71,16 +113,41 @@ export default function Pricing(props: PricingProps) {
             
             <Header settings={settings} />
             
-            <main className="min-h-screen bg-gray-50 py-20">
+            <main className="min-h-screen bg-white py-24 md:py-32">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-12">
-                        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                        <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-gray-900 mb-6">
                             {pricingSettings.title || t('Subscription Setting')}
                         </h1>
-                        <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                        <p className="text-lg md:text-xl text-gray-500 max-w-3xl mx-auto mb-8 font-normal">
                             {pricingSettings.subtitle || t('Choose the perfect subscription plan for your business needs')}
                         </p>
                     </div>
+
+                    {/* Ways to run Zerp: Open Source / Cloud / Customize / Installation */}
+                    <section ref={tiersRef} className="mb-16">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {tiers.map((tier) => (
+                                <div
+                                    key={tier.name}
+                                    className="reveal-item bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-300 flex flex-col"
+                                >
+                                    <h3 className="text-lg font-semibold tracking-tight text-gray-900 mb-1">{tier.name}</h3>
+                                    <div className="text-2xl font-semibold tracking-tight mb-3" style={{ color: colors.primary }}>{tier.price}</div>
+                                    <p className="text-sm text-gray-500 flex-1 mb-6">{tier.description}</p>
+                                    <button
+                                        onClick={tier.onClick}
+                                        className="w-full py-2.5 px-4 rounded-lg text-white font-medium transition-colors shadow-sm hover:shadow-md"
+                                        style={{ backgroundColor: colors.primary }}
+                                        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = colors.secondary; }}
+                                        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = colors.primary; }}
+                                    >
+                                        {tier.cta}
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
 
                     {/* Monthly/Yearly Toggle */}
                     {pricingSettings.show_monthly_yearly_toggle === true && (
@@ -112,23 +179,23 @@ export default function Pricing(props: PricingProps) {
                         </div>
                     )}
 
-                    {/* Pre-Package Subscription Layout */}
+                    {/* Pre-Package Subscription Layout (Cloud tier's plan selection) */}
                     {pricingSettings.show_pre_package === true && plans.length > 0 ? (
-                        <div className="space-y-6 overflow-x-auto pt-6">
+                        <div ref={cloudPlansRef} className="space-y-6 overflow-x-auto pt-6">
                             {/* Plans Header Cards */}
                             <div className="grid gap-6" style={{ gridTemplateColumns: `300px repeat(${plans.length}, 280px)`, minWidth: `${300 + (plans.length * 280) + ((plans.length - 1) * 24)}px` }}>
                                 {/* Features Header */}
-                                <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-6 border border-slate-200 sticky left-0 z-20">
+                                <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200 sticky left-0 z-20">
                                     <div className="flex items-center justify-center space-x-3">
-                                        <h3 className="text-xl font-bold text-gray-900">{t("Features")}</h3>
+                                        <h3 className="text-xl font-semibold tracking-tight text-gray-900">{t("Features")}</h3>
                                     </div>
                                 </div>
 
                                 {/* Plan Header Cards */}
                                 {plans.map((plan) => (
-                                    <div 
-                                        key={plan.id} 
-                                        className={`relative rounded-2xl p-6 border-2 bg-white ${
+                                    <div
+                                        key={plan.id}
+                                        className={`relative rounded-2xl p-6 border bg-white shadow-sm ${
                                             plan.id === mostPopularPlanId && plans.length > 1
                                                 ? ''
                                                 : 'border-gray-200'
@@ -140,25 +207,25 @@ export default function Pricing(props: PricingProps) {
                                     >
                                         {plan.id === mostPopularPlanId && plans.length > 1 && (
                                             <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                                                <div 
-                                                    className="text-white px-4 py-2 text-sm font-bold shadow-lg rounded-md whitespace-nowrap"
+                                                <div
+                                                    className="text-white px-4 py-2 text-sm font-semibold shadow-sm rounded-lg whitespace-nowrap"
                                                     style={{ backgroundColor: colors.primary }}
                                                 >
-                                                    ⭐ {t("Most Popular")}
+                                                    {t("Most Popular")}
                                                 </div>
                                             </div>
                                         )}
-                                        
+
                                         <div className="text-center space-y-4">
                                             <div>
-                                                <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                                                <p className="text-sm text-gray-600">{plan.description}</p>
+                                                <h3 className="text-2xl font-semibold tracking-tight text-gray-900 mb-2">{plan.name}</h3>
+                                                <p className="text-sm text-gray-500">{plan.description}</p>
                                             </div>
-                                            
+
                                             <div className="space-y-2">
                                                 {plan.free_plan ? (
                                                     <div>
-                                                        <div className="text-5xl font-black mb-1" style={{ color: colors.primary }}>
+                                                        <div className="text-5xl font-semibold tracking-tight mb-1" style={{ color: colors.primary }}>
                                                             {t("Free")}
                                                         </div>
                                                         <div className="font-semibold" style={{ color: colors.primary }}>
@@ -168,10 +235,10 @@ export default function Pricing(props: PricingProps) {
                                                 ) : (
                                                     <div>
                                                         <div className="flex items-baseline justify-center space-x-1 mb-2">
-                                                            <span className="text-5xl font-black text-gray-900">
+                                                            <span className="text-5xl font-semibold tracking-tight text-gray-900">
                                                                 {priceType === 'monthly' ? formatAdminCurrency(plan.package_price_monthly) : formatAdminCurrency(plan.package_price_yearly)}
                                                             </span>
-                                                            <span className="text-xl text-gray-500 font-semibold">
+                                                            <span className="text-xl text-gray-500 font-medium">
                                                                 /{priceType === 'monthly' ? 'mo' : 'yr'}
                                                             </span>
                                                         </div>
@@ -259,7 +326,7 @@ export default function Pricing(props: PricingProps) {
                                                 ))}
                                                 <div className="pt-4 border-t space-y-2">
                                                     <button 
-                                                        className="w-full py-2 px-4 rounded-md text-white font-medium transition-colors"
+                                                        className="w-full py-2 px-4 rounded-lg text-white font-medium transition-colors"
                                                         style={{ backgroundColor: colors.primary }}
                                                         onClick={() => {
                                                             if (settings?.is_authenticated) {
@@ -273,7 +340,7 @@ export default function Pricing(props: PricingProps) {
                                                     </button>
                                                     {plan.trial && !settings?.is_authenticated && (
                                                         <button 
-                                                            className="w-full py-2 px-4 rounded-md border font-medium transition-colors"
+                                                            className="w-full py-2 px-4 rounded-lg border font-medium transition-colors"
                                                             style={{ 
                                                                 borderColor: colors.primary, 
                                                                 color: colors.primary,
@@ -307,8 +374,8 @@ export default function Pricing(props: PricingProps) {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                             </div>
-                            <h3 className="text-xl font-semibold text-gray-900 mb-2">{t("No Plans Available")}</h3>
-                            <p className="text-gray-600">{pricingSettings.empty_message || t('Check back later for new pricing plans.')}</p>
+                            <h3 className="text-xl font-semibold tracking-tight text-gray-900 mb-2">{t("No Plans Available")}</h3>
+                            <p className="text-gray-500">{pricingSettings.empty_message || t('Check back later for new pricing plans.')}</p>
                         </div>
                     )}
                 </div>

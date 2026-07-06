@@ -46,13 +46,13 @@ const HEADER_VARIANTS = {
         mobileMenu: 'md:hidden bg-black/90 backdrop-blur-md border-t border-white/10'
     },
     header5: {
-        nav: 'sticky top-0 z-50 shadow-xl',
+        nav: 'bg-neutral-950/95 backdrop-blur-md sticky top-0 z-50 border-b border-white/10',
         container: 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8',
         wrapper: 'flex justify-between items-center h-20 py-4',
-        logo: 'text-2xl font-bold text-white drop-shadow-lg',
+        logo: 'text-2xl font-semibold tracking-tight text-white',
         desktop: 'hidden md:flex items-center space-x-2',
         mobile: 'md:hidden text-white p-2 transition-colors hover:bg-white/10 rounded-lg',
-        mobileMenu: 'md:hidden border-t border-white/20'
+        mobileMenu: 'md:hidden bg-neutral-950/95 backdrop-blur-md border-t border-white/10'
     }
 };
 
@@ -65,7 +65,7 @@ export default function Header({ settings }: HeaderProps) {
     const companyName = sectionData.company_name || settings?.company_name || 'Zerp';
     const isAuthenticated = settings?.is_authenticated;
     const ctaText = isAuthenticated ? 'Dashboard' : (sectionData.cta_text || 'Get Started');
-    const colors = settings?.config_sections?.colors || { primary: '#10b77f', secondary: '#059669', accent: '#f59e0b' };
+    const colors = settings?.config_sections?.colors || { primary: '#DA8F29', secondary: '#B8741F', accent: '#f59e0b' };
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     
     const themeMode = getAdminSetting('theme_mode') || 'light';
@@ -142,7 +142,7 @@ export default function Header({ settings }: HeaderProps) {
             return (
                 <button 
                     onClick={() => router.visit(route('dashboard'))}
-                    className={`text-white rounded-md font-medium transition-colors ${
+                    className={`text-white rounded-lg font-medium transition-colors ${
                         isMobile ? 'px-4 py-2 text-sm w-full' : 
                         variant === 'header3' ? 'px-3 py-1 text-xs' : 'px-4 py-2 text-sm'
                     }`}
@@ -160,7 +160,7 @@ export default function Header({ settings }: HeaderProps) {
                 <div className={`flex ${isMobile ? 'flex-col space-y-2' : 'space-x-2'}`}>
                     <button 
                         onClick={() => router.visit(route('login'))}
-                        className={`border rounded-md font-medium transition-colors ${
+                        className={`border rounded-lg font-medium transition-colors ${
                             isMobile ? 'px-4 py-2 text-sm w-full' : 
                             variant === 'header3' ? 'px-3 py-1 text-xs' : 'px-4 py-2 text-sm'
                         }`}
@@ -178,7 +178,7 @@ export default function Header({ settings }: HeaderProps) {
                     </button>
                     <button 
                         onClick={() => router.visit(route('register'))}
-                        className={`text-white rounded-md font-medium transition-colors ${
+                        className={`text-white rounded-lg font-medium transition-colors ${
                             isMobile ? 'px-4 py-2 text-sm w-full' : 
                             variant === 'header3' ? 'px-3 py-1 text-xs' : 'px-4 py-2 text-sm'
                         }`}
@@ -195,7 +195,7 @@ export default function Header({ settings }: HeaderProps) {
         return (
             <button 
                 onClick={() => router.visit(route('login'))}
-                className={`text-white rounded-md font-medium transition-colors ${
+                className={`text-white rounded-lg font-medium transition-colors ${
                     isMobile ? 'px-4 py-2 text-sm w-full' : 
                     variant === 'header3' ? 'px-3 py-1 text-xs' : 'px-4 py-2 text-sm'
                 }`}
@@ -208,31 +208,13 @@ export default function Header({ settings }: HeaderProps) {
         );
     };
 
-    const getGradientStyle = () => {
-        if (variant === 'header5') {
-            return {
-                background: `linear-gradient(to right, ${colors.primary}, ${colors.secondary}, ${colors.accent})`
-            };
-        }
-        return {};
-    };
-
-    const getMobileMenuStyle = () => {
-        if (variant === 'header5') {
-            return {
-                background: `linear-gradient(to right, ${colors.primary}, ${colors.secondary})`
-            };
-        }
-        return {};
-    };
-
     return (
-        <nav className={config.nav} style={getGradientStyle()}>
+        <nav className={config.nav}>
             <div className={config.container}>
                 <div className={config.wrapper}>
                     <Link href={route('landing.page')} className={config.logo} style={{ color: colors.primary }}>
                         {logoUrl ? (
-                            <img src={logoUrl} alt={companyName} className="w-auto" />
+                            <img src={logoUrl} alt={companyName} className="h-7 w-auto" />
                         ) : (
                             companyName
                         )}
@@ -241,12 +223,12 @@ export default function Header({ settings }: HeaderProps) {
                     <div className={config.desktop}>
                         {renderNavItems()}
                         {sectionData?.enable_pricing_link !== false && (
-                            <Link 
+                            <Link
                                 href={route("pricing.page")}
                                 className={`px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg ${
-                                    variant === 'header4' || variant === 'header5' 
-                                        ? 'text-white hover:bg-white/10' 
-                                        : variant === 'header2' 
+                                    variant === 'header4' || variant === 'header5'
+                                        ? 'text-white hover:bg-white/10'
+                                        : variant === 'header2'
                                             ? 'text-gray-600 hover:bg-white hover:shadow-sm'
                                             : 'text-gray-600 hover:bg-gray-50'
                                 }`}
@@ -260,6 +242,24 @@ export default function Header({ settings }: HeaderProps) {
                                 {t('Pricing')}
                             </Link>
                         )}
+                        <Link
+                            href={route("contact.page")}
+                            className={`px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg ${
+                                variant === 'header4' || variant === 'header5'
+                                    ? 'text-white hover:bg-white/10'
+                                    : variant === 'header2'
+                                        ? 'text-gray-600 hover:bg-white hover:shadow-sm'
+                                        : 'text-gray-600 hover:bg-gray-50'
+                            }`}
+                            onMouseEnter={(e) => {
+                                if (variant !== 'header4' && variant !== 'header5') {
+                                    e.currentTarget.style.color = colors.primary;
+                                }
+                            }}
+                            onMouseLeave={(e) => e.currentTarget.style.color = ''}
+                        >
+                            {t('Contact')}
+                        </Link>
                         {renderCTAButtons()}
                     </div>
                     
@@ -275,18 +275,24 @@ export default function Header({ settings }: HeaderProps) {
             </div>
             
             {mobileMenuOpen && (
-                <div className={config.mobileMenu} style={getMobileMenuStyle()}>
+                <div className={config.mobileMenu}>
                     <div className="px-2 pt-2 pb-3 space-y-1">
                         {renderNavItems(true)}
                         <div className="px-3 py-2">
                             {sectionData?.enable_pricing_link !== false && (
-                                <Link 
+                                <Link
                                     href={route("pricing.page")}
                                     className="block px-3 py-2 text-base font-medium text-gray-600"
                                 >
                                     {t('Pricing')}
                                 </Link>
                             )}
+                            <Link
+                                href={route("contact.page")}
+                                className="block px-3 py-2 text-base font-medium text-gray-600"
+                            >
+                                {t('Contact')}
+                            </Link>
                             {renderCTAButtons(true)}
                         </div>
                     </div>
