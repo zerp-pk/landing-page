@@ -88,8 +88,8 @@ export default function Benefits({ settings }: BenefitsProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {benefits.map((benefit: any, index: number) => (
                 <div key={index} className="reveal-item bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all">
-                    <div className="w-12 h-12 rounded-lg mb-4 flex items-center justify-center" style={{ backgroundColor: colors.primary }}>
-                        <CheckCircle className="h-6 w-6 text-white" />
+                    <div className="w-12 h-12 rounded-lg mb-4 flex items-center justify-center" style={{ backgroundColor: `${colors.primary}15` }}>
+                        <CheckCircle className="h-6 w-6" style={{ color: colors.primary }} />
                     </div>
                     <h3 className="text-xl font-semibold tracking-tight text-gray-900 mb-3">{benefit.title}</h3>
                     <p className="text-gray-500">{benefit.description}</p>
@@ -120,8 +120,8 @@ export default function Benefits({ settings }: BenefitsProps) {
             <div className="space-y-8">
                 {benefits.map((benefit: any, index: number) => (
                     <div key={index} className="reveal-item relative flex items-start space-x-6">
-                        <div className="flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: colors.primary }}>
-                            <CheckCircle className="h-8 w-8 text-white" />
+                        <div className="flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: `${colors.primary}25` }}>
+                            <CheckCircle className="h-8 w-8" style={{ color: colors.primary }} />
                         </div>
                         <div className="bg-white/5 border border-white/10 p-6 rounded-2xl flex-1">
                             <h3 className="text-xl font-semibold tracking-tight text-white mb-3">{benefit.title}</h3>

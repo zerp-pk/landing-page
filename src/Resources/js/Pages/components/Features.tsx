@@ -99,8 +99,8 @@ export default function Features({ settings }: FeaturesProps) {
         if (config.layout === 'grid') {
             return (
                 <div key={index} className="reveal-item text-center p-6 hover:bg-gray-50 rounded-lg transition-colors">
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-lg flex items-center justify-center" style={{ backgroundColor: colors.primary }}>
-                        <IconComponent className="h-8 w-8 text-white" />
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${colors.primary}15` }}>
+                        <IconComponent className="h-8 w-8" style={{ color: colors.primary }} />
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
                     <p className="text-gray-500">{feature.description}</p>
@@ -111,8 +111,8 @@ export default function Features({ settings }: FeaturesProps) {
         if (config.layout === 'list') {
             return (
                 <div key={index} className="reveal-item flex items-start space-x-6 p-6 bg-white rounded-2xl border border-gray-200 shadow-sm">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: colors.primary }}>
-                        <IconComponent className="h-6 w-6 text-white" />
+                    <div className="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${colors.primary}15` }}>
+                        <IconComponent className="h-6 w-6" style={{ color: colors.primary }} />
                     </div>
                     <div>
                         <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
@@ -125,8 +125,8 @@ export default function Features({ settings }: FeaturesProps) {
         if (config.layout === 'cards') {
             return (
                 <div key={index} className="reveal-item bg-white p-8 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all">
-                    <div className="w-14 h-14 mb-6 rounded-lg flex items-center justify-center" style={{ backgroundColor: colors.primary }}>
-                        <IconComponent className="h-7 w-7 text-white" />
+                    <div className="w-14 h-14 mb-6 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${colors.primary}15` }}>
+                        <IconComponent className="h-7 w-7" style={{ color: colors.primary }} />
                     </div>
                     <h3 className="text-2xl font-semibold text-gray-900 mb-4">{feature.title}</h3>
                     <p className="text-gray-500 text-lg">{feature.description}</p>
@@ -137,8 +137,8 @@ export default function Features({ settings }: FeaturesProps) {
         if (config.layout === 'split') {
             return (
                 <div key={index} className="reveal-item flex items-center space-x-4 p-4 bg-white/5 border border-white/10 rounded-lg">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: colors.primary }}>
-                        <IconComponent className="h-5 w-5 text-white" />
+                    <div className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${colors.primary}25` }}>
+                        <IconComponent className="h-5 w-5" style={{ color: colors.primary }} />
                     </div>
                     <div>
                         <h3 className="text-lg font-semibold text-white mb-1">{feature.title}</h3>
