@@ -62,8 +62,7 @@ export default function Pricing(props: PricingProps) {
     const cloudPlansRef = useRef<HTMLDivElement>(null);
     const scrollToCloudPlans = () => cloudPlansRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    // TODO: swap for https://docs.zerp.pk/developer/getting-started once that DNS is live.
-    const docsGettingStartedUrl = 'https://zerp-pk.github.io/docs/developer/getting-started';
+    const docsGettingStartedUrl = 'https://docs.zerp.pk/developer/getting-started';
     const tiers = [
         {
             name: t('Open Source'),
