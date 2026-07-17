@@ -69,10 +69,10 @@ class LandingPageSettingSeeder extends Seeder
             'stats' => [
                 'variant' => 'stats1',
                 'stats' => [
-                    ['label' => 'Businesses Trust Us', 'value' => '20,000+'],
+                    ['label' => 'Businesses Trust Us', 'value' => '200+'],
                     ['label' => 'Uptime Guarantee', 'value' => '99.9%'],
                     ['label' => 'Customer Support', 'value' => '24/7'],
-                    ['label' => 'Countries Worldwide', 'value' => '70+']
+                    ['label' => 'Countries Worldwide', 'value' => '16+']
                 ]
             ],
             'features' => [

@@ -56,10 +56,10 @@ export default function Stats({ settings }: StatsProps) {
     const colors = settings?.config_sections?.colors || { primary: '#DA8F29', secondary: '#B8741F', accent: '#f59e0b' };
     
     const defaultStats = [
-        { label: 'Businesses Trust Us', value: '20,000+' },
+        { label: 'Businesses Trust Us', value: '200+' },
         { label: 'Uptime Guarantee', value: '99.9%' },
         { label: 'Customer Support', value: '24/7' },
-        { label: 'Countries Worldwide', value: '70+' }
+        { label: 'Countries Worldwide', value: '16+' }
     ];
     
     const stats = sectionData.stats?.length > 0 ? sectionData.stats : defaultStats;
