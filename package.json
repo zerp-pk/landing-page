@@ -1,0 +1,15 @@
+{
+  "name": "@zerp/landing-page",
+  "version": "1.0.0",
+  "description": "Landing page, CMS, and marketplace module for the Zerp ERP platform",
+  "license": "MIT",
+  "private": true,
+  "peerDependencies": {
+    "@inertiajs/react": "^1.0.0",
+    "gsap": "^3.15.0",
+    "lucide-react": "^0.378.0",
+    "react": "^18.2.0",
+    "react-i18next": "^15.6.1",
+    "sonner": "^2.0.7"
+  }
+}
