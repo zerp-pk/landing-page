@@ -19,7 +19,7 @@ class NewsletterSubscriberController extends Controller
         if(Auth::user()->can('manage-newsletter-subscribers')){
             $subscribers = NewsletterSubscriber::query()
                 ->when($request->filled('email'), fn($q) => $q->where('email', 'like', '%' . $request->email . '%'))
-                ->when($request->filled('sort'), fn($q) => $q->orderBy($request->sort, $request->get('direction', 'asc')), fn($q) => $q->latest('subscribed_at'))
+                ->when($request->filled('sort'), fn($q) => $q->sortSafe($request->sort, $request->get('direction'), 'subscribed_at', 'desc'), fn($q) => $q->latest('subscribed_at'))
                 ->paginate($request->get('per_page', 10))
                 ->withQueryString();
 
