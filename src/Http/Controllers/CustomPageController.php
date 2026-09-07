@@ -22,8 +22,7 @@ class CustomPageController extends Controller
             }
             
             if ($request->filled('sort')) {
-                $direction = $request->get('direction', 'asc');
-                $query->orderBy($request->sort, $direction);
+                $query->sortSafe($request->sort, $request->get('direction'), 'created_at', 'desc');
             } else {
                 $query->orderBy('created_at', 'desc');
             }
